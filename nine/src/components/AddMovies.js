@@ -1,54 +1,58 @@
 import React from "react";
-import { Form, FormGroup, Input, Col, Navbar } from "reactstrap";
 
-class Movies extends React.Component {
-  constructor(props) {
-    super(props);
+import { Form, FormGroup, Input, Col, Navbar, Button } from "reactstrap";
+
+class AddMovie extends React.Component {
+  constructor() {
+    super()
     this.state = {
-      name: "",
-    };
+      inputValue: ''
+    }
   }
 
-  handleChange = (e) => {
+  handleChanges = (e) =>  {
     this.setState({
-      ...this.state.name,
-      name: e.target.value,
-    });
-  };
+      inputValue: e.target.value
+    })
+  }
 
-  submitMovie = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addMovie(this.state.name);
-  };
+    // console.log(this.state.inputValue)
+    this.props.addMovie(this.state.inputValue)
+    this.setState({
+      inputValue: ''
+    })
+  }
+
   render() {
     return (
       <div className="addMovie">
-        <Navbar className="bar">
-          <h2>Top Nine</h2>
-          <button className="signB">
-            <a href="/home">Home</a>
-          </button>
+        <Navbar className="landNav">
+          <h2>Top 3</h2>
+          <Button color="primary" href="/home">Home</Button>
         </Navbar>
+       
         <div className="addCard">
-          <p className="title1">Add Your Movie</p>
-          <Form className="form" onSubmit={this.submitMovie}>
+          <h3 className="title1">Movie</h3>
+          <Form className="formMovie" onSubmit={this.handleSubmit}>
             <Col>
               <FormGroup>
                 <Input
                   type="text"
                   name="movie"
-                  placeholder="Movie"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                />
+                  value={this.state.inputValue}
+                  onChange={this.handleChanges}
+                  />
               </FormGroup>
-              <button className="site-button">Add</button>
             </Col>
+            <Button color="primary">Add</Button>
           </Form>
         </div>
       </div>
     );
   }
-}
+  }
 
-export default Movies;
+export default AddMovie;
+

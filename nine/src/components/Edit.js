@@ -1,39 +1,52 @@
 import React from "react";
-import { Col, Form, Input, Navbar } from "reactstrap";
+import { Col, Form, FormGroup, Input, Navbar, Button } from "reactstrap";
 
-const Edit = (props) => {
-  return (
-    <div className="editPage">
-      <Navbar className="bar">
-        <h2>Top Nine</h2>
-        <button className="site-button">
-          <a href="/home">Home</a>
-        </button>
+class Edit extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      name: ''
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      name: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.updateItem();
+  }
+  render() {
+    return (
+      <div className="editPage">
+      <Navbar className="landNav">
+        <h2>Top 3</h2>
+        <Button color="primary" href="/home">Home</Button>
       </Navbar>
-      <div className="editForm">
-        <h1>Edit Here</h1>
-        <Form
-          onSubmit={(changes) =>
-            props.updateItem(changes, props.match.params.id)
-          }
-        >
+      
+      <div className="addCard">
+        <h3 className="title1">Edit Here</h3>
+        <Form className="formMovie" onSubmit={this.handleSubmit}>
           <Col>
-            <Input
-              id="editInput"
-              type="edit"
-              name="edit"
-              placeholder="Edit"
-              value={props.value}
-              onChange={props.handleChange}
-            />
-            <button className="site-button" type="submit">
-              Submit
-            </button>
+            <FormGroup>
+              <Input
+                type="edit"
+                name="movie"
+                value={this.state.name}
+                onChange={this.handleChange}
+                />
+            </FormGroup>
           </Col>
+          <Button color="primary" type="submit">Edit</Button>
         </Form>
       </div>
     </div>
   );
+}
 };
 
 export default Edit;
+

@@ -147,11 +147,15 @@ html {
   color: blue;
   font-weight: bolder;
 }
+Label {
+  color: white;
+  text-shadow: 0.1rem 0.1rem black;
+}
 
 /* Register */
 
 .register {
-  background-image: url(images/register.jpg);
+  background-image: url(images/homePic.webp);
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
@@ -183,85 +187,10 @@ html {
   height: 300px;
   margin: 0 auto;
 }
-.create {
+.loginCard a {
   color: white;
   margin-top: 5%;
 }
-
-/* Home Page */
-
-.h2 {
-  color: yellow;
-  margin: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 45px;
-  font-weight: bolder;
-}
-
-.home {
-  background-image: url(images/homePic.webp);
-  width: 100%;
-  display: block;
-}
-
-.movies {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.delete {
+.logLabel {
   color: white;
-  background-color: red;
-  border-radius: 5px;
-}
-
-.edit {
-  color: white;
-  background-color: dodgerblue;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.movie-card {
-  background-color: white;
-  width: 300px;
-  height: 200px;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin: 10px;
-  opacity: 0.9;
-}
-
-/* AddMovie Page */
-
-.addMovie {
-  background-color: dodgerblue;
-  height: 700px;
-}
-
-.addCard {
-  margin-top: 100px;
-}
-
-.title1 {
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 38px;
-  font-weight: 700;
-}
-
-/* Edit Page */
-
-.editPage {
-  background-color: dodgerblue;
-  height: 700px;
-}
-
-.editForm {
-  width: 300px;
-  margin: 100px auto;
-}
-
-#editInput {
-  border: 2px solid black;
 }

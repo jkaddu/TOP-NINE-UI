@@ -9,14 +9,19 @@ import { axiosWithAuth } from "./auth/axiosWithAuth";
 import Home from "./components/Home";
 import AddMovies from "./components/AddMovies";
 import Edit from "./components/Edit";
-import Land from "./components/LandingPage";
+import Land from "./components/Land";
 // import PrivateRoute from "./components/PrivateRoute";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      movies: [],
+      movies: [
+        {
+          id: 1,
+          name: ''
+        }
+      ]
     };
   }
 
@@ -24,13 +29,11 @@ class App extends React.Component {
     const endpoint = "https://top9-the2nd.herokuapp.com/api/movies";
     axios
       .get(endpoint, {
-        "Content-Type": "application/json",
         headers: { authorization: localStorage.getItem("token") },
       })
-      .then((response) => {
-        console.log(response);
+      .then((res) => {
         this.setState({
-          movies: response.data,
+          movies: res.data,
         });
       })
       .catch((error) => {
@@ -39,14 +42,19 @@ class App extends React.Component {
   }
 
   addMovie = (movie) => {
-    // const endpoint = "https://top9-the2nd.herokuapp.com/api/movies";
+    // created an authorization component with headers/baseURL that is passed into axiosWithAuth()
     axiosWithAuth()
-      .post("", movie)
-      .then((res) => {
+      .post()
+      .then(() => {
+        const movieName = {
+          id: Date.now(),
+          name: movie.name
+        }
+        const newMovie = [...this.state.movies, movieName]
         this.setState({
-          movies: res.data.name,
+         movies: newMovie
         });
-        // this.props.history.push("/home");
+        window.location.href = "/home";
       })
       .catch((error) => console.log(error));
   };
@@ -56,16 +64,12 @@ class App extends React.Component {
     const endpoint = `https://top9-the2nd.herokuapp.com/api/movies/${id}`;
     
     axios
-    .put(endpoint, updatedMovie, {
-      headers: { Authorization: localStorage.getItem("token") },
-    })
-    .then((res) => {
-      const movie = res.data.name;
-      this.setState({
-          movies: movie,
-        });
-        // redirect to home page
-        this.props.history.push("/home");
+      .put(endpoint, updatedMovie, {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        console.log(res)
+        window.location.href = "/home";
       })
       .catch((error) => {
         console.log(error);
@@ -78,9 +82,10 @@ class App extends React.Component {
       .delete(endpoint, {
         headers: { Authorization: localStorage.getItem("token") },
       })
-      .then((res) => {
-        const movie = res.data;
-        this.setState({ movie });
+      .then((response) => {
+        const movie = response.data;
+        this.setState({ movie }); 
+        window.location.href = "/home";
       })
       .catch((error) => {
         console.log(error);
@@ -98,11 +103,11 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Route exact path="/" component={Land} />
-          <Route exact path="/login" component={Login} />
+          <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/home" render={(props) => (<Home {...props} mount={this.componentDidMount} movies={this.state.movies} delete={this.deleteMovie} /> )} />
           <Route path="/movie"render={(props) => ( <AddMovies {...props} addMovie={this.addMovie} /> )} />
-          <Route path="/edit/:id" render={(props) => ( <Edit {...props} handleChange={this.handleChange} updateMovie={this.updateMovie} value={this.state.name} /> )} />
+          <Route path="/edit/:id" render={(props) => ( <Edit {...props} movies={this.state.movies} updateMovie={this.updateMovie} value={this.state.name} /> )} />
         </Router>
       </div>
     );

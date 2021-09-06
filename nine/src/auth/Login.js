@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Col, Form, FormGroup, Input, Navbar, Button } from "reactstrap";
+import { Col, Form, FormGroup, Input, Navbar, Button, Label } from "reactstrap";
 import '../App.css';
 
 class Login extends React.Component {
@@ -11,6 +11,7 @@ class Login extends React.Component {
     },
   };
 
+  
   login = (e) => {
     e.preventDefault();
     axios
@@ -22,6 +23,7 @@ class Login extends React.Component {
       .catch((error) => {
         console.log(error);
         alert("Invalid Credentials");
+      
       });
   };
 
@@ -36,9 +38,10 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
-          <Navbar className="bar">
+      <>
+          <Navbar className="landNav">
             <h2>Top 3</h2>
+            <Button color="primary" href="/register">Register</Button>
           </Navbar>
        
           <div className="loginCont">
@@ -46,10 +49,10 @@ class Login extends React.Component {
             <Form className="form" onSubmit={this.login}>
               <Col>
                 <FormGroup>
+                  <Label className="logLabel">Username</Label>
                   <Input
                     type="text"
                     name="username"
-                    placeholder="username"
                     value={this.state.user.username}
                     onChange={this.handleChange}
                   />
@@ -57,10 +60,10 @@ class Login extends React.Component {
               </Col>
               <Col>
                 <FormGroup>
+                  <Label className="logLabel">Password</Label>
                   <Input
                     type="password"
                     name="password"
-                    placeholder="password"
                     value={this.state.user.password}
                     onChange={this.handleChange}
                   />
@@ -70,12 +73,11 @@ class Login extends React.Component {
               <Button color="primary" type="submit">
                 Login
               </Button>
-              <p class="create">Create an account</p>
-              <a href="/register">Register</a>
             </Form>
+            <a href="/register" className="create">Create an account</a>
             </div>
           </div>
-      </div>
+      </>
     );
   }
 }
